@@ -5,31 +5,31 @@ import (
 )
 
 type Network struct {
-    usc *USC
+    usc    *USC
     server jsonrpc.JsonRpcServer
 }
 
 func (n *Network) Start(port int) {
     n.server.Start(port,
-    func(method string, params interface{}) (interface{},interface{}) {
-        switch method {
-        case "list":
-            return n.usc.toJson(),nil
-        case "call":
-            return n.call(params.([]interface{}))
-        }
-        return nil,"Cannot find method"
-    })
+        func(method string, params interface{}) (interface{}, interface{}) {
+            switch method {
+            case "list":
+                return n.usc.toJson(), nil
+            case "call":
+                return n.call(params.([]interface{}))
+            }
+            return nil, "Cannot find method"
+        })
 }
 
 func (n *Network) Stop() {
     n.server.Stop()
 }
 
-func (n *Network) call(params []interface{}) (interface{},interface{}) {
+func (n *Network) call(params []interface{}) (interface{}, interface{}) {
     p := []Param{}
 
-    for _,arg := range params {
+    for _, arg := range params {
         a_arg := arg.([]interface{})
         param := Param{int(a_arg[1].(float64)), a_arg[0].(string)}
         p = append(p, param)
@@ -42,7 +42,9 @@ func (n *Network) call(params []interface{}) (interface{},interface{}) {
 
     result["answer"] = answer
     result["refresh"] = refresh
-    if refresh { result["root"] = n.usc.toJson() }
+    if refresh {
+        result["root"] = n.usc.toJson()
+    }
 
-    return result,nil
+    return result, nil
 }

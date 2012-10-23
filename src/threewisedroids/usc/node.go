@@ -1,7 +1,7 @@
 package usc
 
 type Node struct {
-    name string
+    name      string
     commandId int
-    childs []string
+    childs    []string
 }

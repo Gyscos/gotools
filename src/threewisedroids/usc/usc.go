@@ -1,15 +1,15 @@
 package usc
 
 type USC struct {
-    lists map[string] *List
+    lists         map[string]*List
     refreshNeeded bool
-    handler Handler
-    network Network
+    handler       Handler
+    network       Network
 }
 
 func MakeUSC(handler Handler) *USC {
-    result := &USC{lists:map[string] *List {}, handler:handler}
-    result.network = Network{usc:result}
+    result := &USC{lists: map[string]*List{}, handler: handler}
+    result.network = Network{usc: result}
 
     return result
 }
@@ -24,10 +24,10 @@ func (u *USC) refresh() bool {
     return result
 }
 
-func (u *USC) toJson() map[string] interface{} {
-    result := make(map[string] interface{})
+func (u *USC) toJson() map[string]interface{} {
+    result := make(map[string]interface{})
 
-    for name,list := range u.lists {
+    for name, list := range u.lists {
         result[name] = list.toJson()
     }
 
@@ -43,7 +43,7 @@ func (u *USC) handleCommand(params []Param) string {
 }
 
 func (u *USC) AddList(name string) *List {
-    if _,ok := u.lists[name]; !ok {
+    if _, ok := u.lists[name]; !ok {
         u.lists[name] = &List{nodes: []Node{}}
     }
     return u.lists[name]

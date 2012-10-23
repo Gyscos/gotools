@@ -1,8 +1,8 @@
 package jsonrpc
 
 import (
-    "fmt"
     "encoding/json"
+    "fmt"
     "net"
     "strconv"
 )
@@ -15,15 +15,15 @@ type JsonRpcServer struct {
 }
 
 type jsonRequest struct {
-    Method string           `json:"method"`
+    Method string      `json:"method"`
     Params interface{} `json:"params"`
-    Id     int `json:"id"`
+    Id     int         `json:"id"`
 }
 
 type jsonResponse struct {
-    Id     int `json:"id"`
-    Result interface{}      `json:"result"`
-    Error  interface{}      `json:"error"`
+    Id     int         `json:"id"`
+    Result interface{} `json:"result"`
+    Error  interface{} `json:"error"`
 }
 
 func handleClient(conn net.Conn, handler JsonRpcHandler) {
@@ -70,7 +70,6 @@ func (s *JsonRpcServer) Start(port int, handler JsonRpcHandler) {
 
     l, err := net.Listen("tcp", addr)
 
-
     if err != nil {
         fmt.Printf("Error : %v\n", err)
         return
@@ -83,16 +82,16 @@ func (s *JsonRpcServer) Start(port int, handler JsonRpcHandler) {
 
 func (s *JsonRpcServer) Stop() {
     s.listener.Close()
-    s.control<- 2
+    s.control <- 2
 }
 
-func RpcQuery(host string, port int, method string, params interface{}) (interface{},interface{}) {
+func RpcQuery(host string, port int, method string, params interface{}) (interface{}, interface{}) {
     addr := host + ":" + strconv.Itoa(port)
 
-    conn,err := net.Dial("tcp", addr)
+    conn, err := net.Dial("tcp", addr)
 
     if err != nil {
-        return nil,err
+        return nil, err
     }
 
     var req = jsonRequest{Id: 42, Method: method, Params: params}
