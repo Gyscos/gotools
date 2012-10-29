@@ -3,7 +3,7 @@ package main
 import (
     "time"
     "fmt"
-    "threewisedroids/usc"
+    "github.com/Gyscos/gotools/usc"
     "runtime"
 )
 

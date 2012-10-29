@@ -1,7 +1,7 @@
 package usc
 
 import (
-    "threewisedroids/jsonrpc"
+    "github.com/Gyscos/gotools/jsonrpc"
 )
 
 type Network struct {
